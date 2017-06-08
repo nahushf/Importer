@@ -9,6 +9,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     let disposable = vscode.commands.registerCommand('Importer.addTSImport', () => {
         let currentFilePath = getCurrentFilePath();
+
+        // Find all files.
         Promise.all([
             vscode.workspace.findFiles('**/**.ts', null),
             vscode.workspace.findFiles('**/**.tsx', null)
@@ -39,6 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
                         return [...total, ...next];
                     })
 
+                    // Request import destination file.
                 vscode.window.showQuickPick(filePaths)
                     .then(item => {
                         vscode.window.showInputBox({
